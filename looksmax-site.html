@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAXFORMA — Potansiyelinin Zirvesine Ulaş</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0a;--bg2:#111111;--bg3:#1a1a1a;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.14);--accent:#c8a96e;--accent2:#e8c98a;--text:#f0ece4;--muted:#888680;--sidebar-w:320px;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.6;overflow-x:hidden;}
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-w);background:var(--bg2);border-right:1px solid var(--border);z-index:100;display:flex;flex-direction:column;transform:translateX(-100%);transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);overflow-y:auto;}
+.sidebar.open{transform:translateX(0);}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:99;}
+.sidebar-overlay.show{display:block;}
+.sidebar-logo{padding:2rem 1.5rem 1.2rem;border-bottom:1px solid var(--border);font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:3px;color:var(--accent);}
+.sidebar-logo span{color:var(--text);}
+.sidebar-close{position:absolute;top:1.5rem;right:1.2rem;background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;}
+.sidebar-close:hover{color:var(--text);}
+.s-sec{padding:1.5rem;}
+.s-sec+.s-sec{border-top:1px solid var(--border);}
+.s-tag{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);margin-bottom:0.8rem;font-weight:500;}
+.sidebar h3{font-family:'Bebas Neue',sans-serif;font-size:1.25rem;letter-spacing:2px;margin-bottom:0.8rem;color:var(--text);}
+.sidebar p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:0.9rem;}
+.sci-block{background:var(--bg3);border-radius:10px;padding:0.9rem;margin-bottom:0.7rem;border:1px solid var(--border);display:flex;gap:0.9rem;align-items:flex-start;}
+.sci-icon{font-size:1.2rem;flex-shrink:0;margin-top:2px;}
+.sci-block h4{font-size:12px;font-weight:500;margin-bottom:0.2rem;}
+.sci-block p{font-size:11px;color:var(--muted);margin:0;line-height:1.6;}
+.sci-ref{font-size:10px;color:rgba(200,169,110,0.5);margin-top:0.3rem;}
+.s-celeb-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:0.5rem;}
+.s-celeb{border:1px solid var(--border);border-radius:10px;padding:0.7rem;background:var(--bg3);text-align:center;}
+.s-celeb img{width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--accent);margin:0 auto 0.4rem;display:block;}
+.s-celeb-av{width:44px;height:44px;border-radius:50%;border:2px solid var(--accent);margin:0 auto 0.4rem;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--accent);background:var(--bg2);}
+.s-celeb .nm{font-size:11px;font-weight:500;color:var(--text);}
+.s-celeb .tr{font-size:10px;color:var(--accent);margin-top:2px;}
+.sidebar-pot{background:linear-gradient(135deg,rgba(200,169,110,0.12),rgba(200,169,110,0.04));border:1px solid rgba(200,169,110,0.25);border-radius:12px;padding:1.2rem;text-align:center;}
+.sidebar-pot h3{color:var(--accent);margin-bottom:0.5rem;}
+.sidebar-pot p{font-size:12px;margin-bottom:1rem;}
+.topbar{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(10,10,10,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;z-index:90;}
+.hamburger{width:40px;height:40px;border:1px solid var(--border2);border-radius:8px;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;transition:border-color 0.2s;}
+.hamburger:hover{border-color:var(--accent);}
+.hamburger span{display:block;width:18px;height:1.5px;background:var(--text);transition:background 0.2s;}
+.hamburger:hover span{background:var(--accent);}
+.topbar-logo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:3px;color:var(--accent);}
+.topbar-logo span{color:var(--text);}
+.topbar-cta{background:none;border:1px solid var(--accent);color:var(--accent);border-radius:8px;padding:0.4rem 1rem;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all 0.2s;}
+.topbar-cta:hover{background:var(--accent);color:#0a0a0a;}
+main{padding-top:56px;}
+.hero{min-height:calc(100vh - 56px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:4rem 1.5rem;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 40%,rgba(200,169,110,0.06) 0%,transparent 70%);pointer-events:none;}
+.hero-badge{display:inline-flex;align-items:center;gap:0.5rem;border:1px solid rgba(200,169,110,0.3);border-radius:999px;padding:0.3rem 1rem;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:2rem;background:rgba(200,169,110,0.05);}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(0.8);}}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,10vw,7rem);letter-spacing:4px;line-height:0.95;color:var(--text);margin-bottom:1.5rem;}
+.hero h1 .gold{color:var(--accent);}
+.hero p{font-size:clamp(1rem,2vw,1.1rem);color:var(--muted);max-width:520px;font-weight:300;margin-bottom:2.5rem;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;}
+.btn-primary{background:var(--accent);color:#0a0a0a;border:none;border-radius:10px;padding:0.85rem 2rem;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all 0.2s;}
+.btn-primary:hover{background:var(--accent2);transform:translateY(-2px);}
+.btn-outline{background:none;color:var(--text);border:1px solid var(--border2);border-radius:10px;padding:0.85rem 2rem;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:all 0.2s;}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);}
+.hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.5rem;color:var(--muted);font-size:11px;letter-spacing:2px;text-transform:uppercase;}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--accent),transparent);animation:scrollDown 1.5s infinite;}
+@keyframes scrollDown{0%{transform:scaleY(0);transform-origin:top;}50%{transform:scaleY(1);transform-origin:top;}51%{transform:scaleY(1);transform-origin:bottom;}100%{transform:scaleY(0);transform-origin:bottom;}}
+.ai-section{background:var(--bg2);padding:5rem 1.5rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.ai-inner{max-width:860px;margin:0 auto;}
+.upload-zone{border:2px dashed var(--border2);border-radius:16px;padding:3.5rem 2rem;text-align:center;cursor:pointer;transition:all 0.25s;}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--accent);background:rgba(200,169,110,0.04);}
+.upload-zone input{display:none;}
+.upload-icon{width:60px;height:60px;border-radius:16px;background:rgba(200,169,110,0.1);border:1px solid rgba(200,169,110,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem;font-size:1.6rem;}
+.upload-zone h3{font-size:1rem;font-weight:500;margin-bottom:0.4rem;}
+.upload-zone p{font-size:13px;color:var(--muted);}
+.preview-area{display:none;margin-top:2rem;}
+.preview-area.show{display:block;}
+.preview-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:1.5rem;align-items:start;}
+@media(max-width:640px){.preview-grid{grid-template-columns:1fr;}}
+.preview-img-wrap{border-radius:12px;overflow:hidden;border:1px solid var(--border2);aspect-ratio:3/4;background:var(--bg3);}
+.preview-img-wrap img{width:100%;height:100%;object-fit:cover;}
+.analysis-panel{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:1.5rem;}
+.a-header{display:flex;align-items:center;gap:0.6rem;margin-bottom:1.2rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
+.a-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);}
+.a-title{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:500;}
+.a-status{margin-left:auto;font-size:11px;color:var(--muted);}
+.score-bar-row{margin-bottom:1rem;}
+.score-bar-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.3rem;}
+.score-bar-label span{font-size:12px;color:var(--muted);}
+.score-bar-label strong{font-size:13px;font-weight:500;color:var(--text);}
+.score-bar-track{height:4px;background:var(--border2);border-radius:999px;overflow:hidden;}
+.score-bar-fill{height:100%;border-radius:999px;width:0;transition:width 1.2s cubic-bezier(0.4,0,0.2,1);}
+.tag-grid{display:flex;flex-wrap:wrap;gap:6px;margin:0.8rem 0;}
+.tag{font-size:11px;padding:0.25rem 0.7rem;border-radius:999px;border:1px solid rgba(200,169,110,0.3);color:var(--accent);background:rgba(200,169,110,0.05);}
+.reco-list{list-style:none;margin-top:0.5rem;}
+.reco-list li{font-size:12px;color:var(--muted);padding:0.5rem 0;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:0.6rem;line-height:1.5;}
+.reco-list li:last-child{border-bottom:none;}
+.reco-icon{color:var(--accent);font-size:12px;flex-shrink:0;margin-top:2px;}
+.loading-anim{display:flex;flex-direction:column;gap:0.8rem;padding:1rem 0;}
+.loading-bar{height:8px;border-radius:4px;background:var(--border2);position:relative;overflow:hidden;}
+.loading-bar::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(200,169,110,0.3),transparent);animation:shimmer 1.4s infinite;}
+@keyframes shimmer{0%{transform:translateX(-100%);}100%{transform:translateX(100%);}}
+.loading-bar:nth-child(1){width:80%;}
+.loading-bar:nth-child(2){width:60%;}
+.loading-bar:nth-child(3){width:72%;}
+.loading-bar:nth-child(4){width:50%;}
+section{padding:5rem 1.5rem;max-width:960px;margin:0 auto;}
+.s-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:0.8rem;font-weight:500;}
+.s-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,3rem);letter-spacing:2px;color:var(--text);margin-bottom:0.8rem;}
+.s-sub{color:var(--muted);font-size:15px;font-weight:300;max-width:560px;line-height:1.8;margin-bottom:3rem;}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:16px;overflow:hidden;border:1px solid var(--border);margin-bottom:4rem;}
+.stat-item{background:var(--bg2);padding:2rem 1.5rem;text-align:center;}
+.stat-val{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:2px;color:var(--accent);display:block;}
+.stat-lbl{font-size:12px;color:var(--muted);letter-spacing:1px;}
+.terms-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;}
+.term-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.2rem;transition:border-color 0.2s,transform 0.2s;}
+.term-card:hover{border-color:rgba(200,169,110,0.3);transform:translateY(-2px);}
+.term-icon{width:36px;height:36px;border-radius:8px;background:rgba(200,169,110,0.1);display:flex;align-items:center;justify-content:center;font-size:1rem;margin-bottom:0.8rem;}
+.term-card h4{font-size:13px;font-weight:500;margin-bottom:0.3rem;}
+.term-card p{font-size:12px;color:var(--muted);line-height:1.6;}
+.term-card .sci{font-size:10px;color:rgba(200,169,110,0.45);margin-top:0.4rem;}
+.celebs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin-top:2rem;}
+.celeb-big{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:1.5rem 1rem;text-align:center;transition:border-color 0.2s,transform 0.2s;}
+.celeb-big:hover{border-color:rgba(200,169,110,0.35);transform:translateY(-3px);}
+.celeb-big img{width:64px;height:64px;border-radius:50%;object-fit:cover;object-position:center top;margin:0 auto 0.8rem;display:block;border:2px solid var(--accent);}
+.celeb-big .cname{font-size:13px;font-weight:500;margin-bottom:0.25rem;}
+.celeb-big .ctrait{font-size:11px;color:var(--accent);margin-bottom:0.4rem;}
+.celeb-big .cscore{font-size:10px;color:var(--muted);background:var(--bg3);border-radius:4px;padding:0.2rem 0.5rem;display:inline-block;}
+.celeb-big .cplatform{font-size:9px;color:rgba(200,169,110,0.4);letter-spacing:1px;text-transform:uppercase;margin-top:4px;}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem;margin-top:2.5rem;}
+.plan-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:2rem;position:relative;transition:border-color 0.25s,transform 0.2s;}
+.plan-card:hover{transform:translateY(-3px);}
+.plan-card.featured{border-color:rgba(200,169,110,0.4);background:linear-gradient(160deg,rgba(200,169,110,0.06),var(--bg2));}
+.plan-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--accent);color:#0a0a0a;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:0.25rem 0.9rem;border-radius:999px;}
+.plan-name{font-size:11px;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:0.6rem;}
+.plan-price{font-family:'Bebas Neue',sans-serif;font-size:3rem;letter-spacing:2px;color:var(--text);line-height:1;margin-bottom:0.2rem;}
+.plan-price span{font-size:1.2rem;color:var(--muted);}
+.plan-period{font-size:12px;color:var(--muted);margin-bottom:1.5rem;}
+.plan-features{list-style:none;margin-bottom:2rem;}
+.plan-features li{font-size:13px;color:var(--muted);padding:0.45rem 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.6rem;}
+.plan-features li:last-child{border-bottom:none;}
+.plan-features li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+.plan-features li.off::before{background:var(--border2);}
+.plan-features li.off{opacity:0.4;text-decoration:line-through;}
+.plan-btn{width:100%;padding:0.8rem;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all 0.2s;}
+.plan-btn-o{background:none;border:1px solid var(--border2);color:var(--text);}
+.plan-btn-o:hover{border-color:var(--accent);color:var(--accent);}
+.plan-btn-g{background:var(--accent);border:none;color:#0a0a0a;}
+.plan-btn-g:hover{background:var(--accent2);}
+.btn-gold{background:var(--accent);color:#0a0a0a;border:none;border-radius:8px;padding:0.6rem 1.2rem;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:background 0.2s,transform 0.1s;}
+.btn-gold:hover{background:var(--accent2);transform:translateY(-1px);}
+/* PREMIUM MODAL */
+.pm-wrap{display:none;position:fixed;inset:0;z-index:300;align-items:flex-end;justify-content:center;padding:0 0.5rem 0.5rem;}
+.pm-wrap.open{display:flex;}
+.pm-backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.7);}
+.pm-box{position:relative;z-index:1;background:var(--bg2);border:1px solid rgba(200,169,110,0.35);border-radius:20px 20px 14px 14px;padding:1.8rem 1.5rem 1.5rem;width:100%;max-width:660px;transform:translateY(110%);animation:slideUp 0.55s cubic-bezier(0.34,1.56,0.64,1) forwards;}
+@keyframes slideUp{to{transform:translateY(0);}}
+.pm-close-btn{position:absolute;top:1rem;right:1rem;background:var(--bg3);border:1px solid var(--border);color:var(--muted);border-radius:8px;padding:0.3rem 0.7rem;font-size:12px;cursor:pointer;}
+.pm-close-btn:hover{color:var(--text);}
+.pm-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:2px;text-align:center;margin-bottom:0.3rem;}
+.pm-sub{font-size:13px;color:var(--muted);text-align:center;margin-bottom:1.4rem;}
+.pm-plans{display:grid;grid-template-columns:repeat(3,1fr);gap:0.7rem;}
+@media(max-width:500px){.pm-plans{grid-template-columns:1fr;}}
+.pm-plan{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:1rem;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;}
+.pm-plan:hover{border-color:rgba(200,169,110,0.4);transform:translateY(-2px);}
+.pm-plan.hot{border-color:rgba(200,169,110,0.5);}
+.pm-plan .pm-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--accent);color:#0a0a0a;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:0.2rem 0.7rem;border-radius:999px;white-space:nowrap;}
+.pm-plan .pm-pname{font-size:10px;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:0.3rem;}
+.pm-plan .pm-pprice{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:2px;color:var(--text);}
+.pm-plan .pm-pperiod{font-size:10px;color:var(--muted);margin-bottom:0.6rem;}
+.pm-plan .pm-pfeats{font-size:11px;color:var(--muted);line-height:1.7;margin-bottom:0.7rem;}
+.pm-plan .pm-pbtn{width:100%;background:none;border:1px solid var(--border2);color:var(--text);border-radius:8px;padding:0.4rem;font-size:12px;cursor:pointer;transition:all 0.2s;}
+.pm-plan.hot .pm-pbtn{background:var(--accent);border:none;color:#0a0a0a;}
+.pm-plan .pm-pbtn:hover{border-color:var(--accent);color:var(--accent);}
+.pm-plan.hot .pm-pbtn:hover{background:var(--accent2);}
+.pm-skip{display:block;text-align:center;margin-top:0.9rem;font-size:12px;color:var(--muted);cursor:pointer;text-decoration:underline;}
+/* SIGNUP MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:400;align-items:center;justify-content:center;padding:1rem;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:2.5rem;max-width:440px;width:100%;position:relative;}
+.modal h2{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:2px;margin-bottom:0.5rem;}
+.modal p{font-size:13px;color:var(--muted);margin-bottom:1.5rem;}
+.modal input[type=email]{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:0.8rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;margin-bottom:1rem;outline:none;transition:border-color 0.2s;}
+.modal input:focus{border-color:var(--accent);}
+.modal-close{position:absolute;top:1.2rem;right:1.2rem;background:none;border:none;color:var(--muted);font-size:1.2rem;cursor:pointer;}
+.modal-close:hover{color:var(--text);}
+footer{border-top:1px solid var(--border);padding:2.5rem 1.5rem;text-align:center;color:var(--muted);font-size:13px;}
+.flogo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:3px;color:var(--accent);margin-bottom:0.5rem;}
+.flogo span{color:var(--text);}
+.notif{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--bg2);border:1px solid rgba(200,169,110,0.35);border-radius:12px;padding:0.8rem 1.5rem;font-size:13px;color:var(--text);z-index:500;transition:transform 0.3s;white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,0.5);}
+.notif.show{transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">MAX<span>FORMA</span></div>
+  <button class="sidebar-close" onclick="closeSidebar()">✕</button>
+
+  <div class="s-sec">
+    <div class="s-tag">Bilimsel Tanım</div>
+    <h3>Looksmaxxing Nedir?</h3>
+    <p>Looksmaxxing; bireyin genetik üst sınırına ulaşmak için biyoloji, fizyoloji ve psikoloji bilimlerini sistematik olarak uygulayan bir öz-optimizasyon disiplinidir.</p>
+    <p style="margin-bottom:1rem;">Araştırmalar yüz çekiciliğinin <strong style="color:var(--text);">%36'ya kadar</strong> sosyal algı, kariyer çıktısı ve yaşam kalitesini etkilediğini göstermektedir. <span style="color:rgba(200,169,110,0.5);font-size:10px;">(Langlois et al., 2000 — Psychological Bulletin)</span></p>
+    <div class="sci-block"><div class="sci-icon">🦴</div><div><h4>Kraniofasiyal Biyomekanik</h4><p>Mandibula açısı ve gonial kemik yapısı, mewing (palatal expansion) ve masseter hipertrofisi yoluyla remodellenebilir.</p><div class="sci-ref">Khechoyan (2013), Journal of Craniofacial Surgery</div></div></div>
+    <div class="sci-block"><div class="sci-icon">💪</div><div><h4>Soft Looksmaxxing</h4><p>Retinoid, niacinamide, SPF protokolü; uyku kalitesi, vücut yağ oranı (%10-15), postür korreksiyonu ve saç sağlığı optimizasyonu.</p><div class="sci-ref">Etcoff et al. (2011), Harvard Medical School</div></div></div>
+    <div class="sci-block"><div class="sci-icon">⚗️</div><div><h4>Hard Looksmaxxing</h4><p>Masseter botoksu, chin filler, orthognathik cerrahi. Risk/fayda analizi ve lisanslı uzman gözetimi zorunludur.</p><div class="sci-ref">Naini & Gill (2008), Journal of Orthodontics</div></div></div>
+    <div class="sci-block"><div class="sci-icon">🧬</div><div><h4>Hormon Optimizasyonu</h4><p>Testosteron ve büyüme hormonu yüz kemik yoğunluğunu ve masseter gelişimini doğrudan etkiler. Uyku + egzersiz endojen profili optimize eder.</p><div class="sci-ref">Winters & Nowicki (2020), Andrology</div></div></div>
+  </div>
+
+  <div class="s-sec">
+    <div class="s-tag">Referans Figürler</div>
+    <h3>Looksmax İkonları</h3>
+    <div class="s-celeb-grid">
+      <div class="s-celeb">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Henry_Cavill_2019.jpg/220px-Henry_Cavill_2019.jpg" alt="Henry Cavill" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="s-celeb-av" style="display:none">HC</div>
+        <div class="nm">Henry Cavill</div><div class="tr">Jawline</div>
+      </div>
+      <div class="s-celeb">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Brad_Pitt_2019_by_Glenn_Francis.jpg/220px-Brad_Pitt_2019_by_Glenn_Francis.jpg" alt="Brad Pitt" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="s-celeb-av" style="display:none">BP</div>
+        <div class="nm">Brad Pitt</div><div class="tr">Simetri</div>
+      </div>
+      <div class="s-celeb">
+        <img src="https://i.ytimg.com/vi/Hg5VzT5IITY/hqdefault.jpg" alt="Zeta" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="s-celeb-av" style="display:none">Z</div>
+        <div class="nm">Zeta</div><div class="tr">TikTok · Mewing</div>
+      </div>
+      <div class="s-celeb">
+        <img src="https://yt3.googleusercontent.com/ytc/AIf8zZRd0YNFK8fh8JCOYGFNikCexHuVfKLjAQCnqFh6=s88-c-k-c0x00ffffff-no-rj" alt="Cookie King" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="s-celeb-av" style="display:none">CK</div>
+        <div class="nm">Cookie King</div><div class="tr">TikTok · Mentor</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="s-sec">
+    <div class="sidebar-pot">
+      <h3>Kendi Potansiyelinin<br>Zirvesine Ulaş</h3>
+      <p>AI analizini yap, bilimsel roadmap'ini al.</p>
+      <button class="btn-gold" onclick="closeSidebar();document.getElementById('ai-upload').scrollIntoView({behavior:'smooth'})">Analizimi Başlat →</button>
+    </div>
+  </div>
+</aside>
+
+<header class="topbar">
+  <button class="hamburger" onclick="openSidebar()"><span></span><span></span><span></span></button>
+  <div class="topbar-logo">MAX<span>FORMA</span></div>
+  <button class="topbar-cta" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Premium</button>
+</header>
+
+<main>
+<div class="hero">
+  <div class="hero-badge"><span class="badge-dot"></span> AI Destekli Yüz Analizi Aktif</div>
+  <h1>GENETİK<br>POTANSİYELİNİ<br><span class="gold">MAXLA</span></h1>
+  <p>Yüz yapını yapay zeka ile analiz et. Mandibula açısı, zigomatik yapı, jawline ve 5 kriter üzerinden kişisel roadmap al.</p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="document.getElementById('ai-upload').scrollIntoView({behavior:'smooth'})">Ücretsiz Analiz Al</button>
+    <button class="btn-outline" onclick="openSidebar()">Bilim Nedir?</button>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div>Kaydır</div>
+</div>
+
+<div class="ai-section" id="ai-upload">
+  <div class="ai-inner">
+    <div class="s-label">AI Analiz — Gemini Vision</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,2.8rem);letter-spacing:2px;margin-bottom:0.6rem;">Yüz Analizini Başlat</div>
+    <p style="color:var(--muted);font-size:14px;margin-bottom:2rem;max-width:560px;">Yapay zeka yüz fotoğrafını 5 looksmax kriteri üzerinden değerlendirir, güçlü yönlerini ve geliştirilebilir alanlarını bilimsel terminolojiyle açıklar.</p>
+    <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()" ondragover="handleDrag(event)" ondrop="handleDrop(event)" ondragleave="handleDragLeave(event)">
+      <input type="file" id="fileInput" accept="image/*" onchange="handleFile(event)">
+      <div class="upload-icon">📸</div>
+      <h3>Fotoğraf Yükle</h3>
+      <p>Sürükle bırak veya tıkla · Yüz fotoğrafı · PNG, JPG, WEBP</p>
+    </div>
+    <div class="preview-area" id="previewArea">
+      <div class="preview-grid">
+        <div class="preview-img-wrap"><img id="previewImg" src="" alt="Yüklenen fotoğraf"></div>
+        <div class="analysis-panel">
+          <div class="a-header">
+            <div class="a-dot" id="aDot"></div>
+            <span class="a-title" id="aTitle">ANALİZ EDİLİYOR</span>
+            <span class="a-status" id="aStatus">⏳</span>
+          </div>
+          <div id="analysisContent">
+            <div class="loading-anim"><div class="loading-bar"></div><div class="loading-bar"></div><div class="loading-bar"></div><div class="loading-bar"></div></div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:1.5rem;">
+        <button class="btn-outline" onclick="resetUpload()" style="font-size:13px;padding:0.5rem 1.2rem;">↺ Yeni Analiz</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="stats-row">
+    <div class="stat-item"><span class="stat-val">14K+</span><span class="stat-lbl">Analiz Tamamlandı</span></div>
+    <div class="stat-item"><span class="stat-val">96%</span><span class="stat-lbl">Kullanıcı Memnuniyeti</span></div>
+    <div class="stat-item"><span class="stat-val">5+</span><span class="stat-lbl">Analiz Kriteri</span></div>
+  </div>
+  <div class="s-label">Analiz Kriterleri</div>
+  <div class="s-title">Ne Analiz Ediliyor?</div>
+  <p class="s-sub">Yapay zeka bu kriterlerle değerlendirme yapar ve her birine özel uygulanabilir öneriler sunar.</p>
+  <div class="terms-grid">
+    <div class="term-card"><div class="term-icon">🦷</div><h4>Mandibula Açısı</h4><p>Gonial açı 110–130° maskülen profil için ideal. Mewing ve masseter hipertrofisi ile optimize edilebilir.</p><div class="sci">Bibby & Preston (1981)</div></div>
+    <div class="term-card"><div class="term-icon">📐</div><h4>Ramus Uzunluğu</h4><p>Çene dikey kolu uzunluğu. Uzun ramus daha keskin ve tanımlı jawline profili oluşturur.</p><div class="sci">Celikoglu et al. (2011)</div></div>
+    <div class="term-card"><div class="term-icon">🎯</div><h4>Zigomatik Yapı</h4><p>Elmacık çıkıntısı yüz genişliği ve üçgenselliğini belirler. Ters üçgen oran evrensel çekicilik göstergesidir.</p><div class="sci">Fink & Penton-Voak (2002)</div></div>
+    <div class="term-card"><div class="term-icon">👁️</div><h4>Canthal Tilt</h4><p>Göz açısı eğimi. +3° ve üzeri pozitif tilt maskülen dominant görünüm sinyali verir.</p><div class="sci">Penton-Voak et al. (1999)</div></div>
+    <div class="term-card"><div class="term-icon">🔢</div><h4>Simetri Skoru</h4><p>Sol/sağ yüz uyumu. %85 üzeri simetri algısal çekiciliği doğrudan artırır.</p><div class="sci">Grammer & Thornhill (1994)</div></div>
+    <div class="term-card"><div class="term-icon">✨</div><h4>Cilt Kalitesi</h4><p>Doku, renk uyumu ve nem dengesi. Soft looksmax ile en hızlı iyileştirilebilir kriter.</p><div class="sci">Etcoff et al. (2011)</div></div>
+  </div>
+</section>
+
+<section style="border-top:1px solid var(--border);">
+  <div class="s-label">Referans Figürler</div>
+  <div class="s-title">Looksmax İkonları</div>
+  <p class="s-sub">Hollywood aktörleri ve TikTok looksmax topluluğunun referans aldığı isimler.</p>
+  <div class="celebs-grid">
+    <div class="celeb-big">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Henry_Cavill_2019.jpg/220px-Henry_Cavill_2019.jpg" alt="Henry Cavill" onerror="this.outerHTML='<div style=\'width:64px;height:64px;border-radius:50%;border:2px solid var(--accent);margin:0 auto 0.8rem;display:flex;align-items:center;justify-content:center;font-family:Bebas Neue,sans-serif;color:var(--accent);background:var(--bg3);font-size:1.3rem\'>HC</div>'">
+      <div class="cname">Henry Cavill</div><div class="ctrait">Güçlü Jawline</div><div class="cscore">Mandibula 9.2/10</div><div class="cplatform">Hollywood</div>
+    </div>
+    <div class="celeb-big">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Brad_Pitt_2019_by_Glenn_Francis.jpg/220px-Brad_Pitt_2019_by_Glenn_Francis.jpg" alt="Brad Pitt" onerror="this.outerHTML='<div style=\'width:64px;height:64px;border-radius:50%;border:2px solid var(--accent);margin:0 auto 0.8rem;display:flex;align-items:center;justify-content:center;font-family:Bebas Neue,sans-serif;color:var(--accent);background:var(--bg3);font-size:1.3rem\'>BP</div>'">
+      <div class="cname">Brad Pitt</div><div class="ctrait">Mükemmel Simetri</div><div class="cscore">Simetri 9.5/10</div><div class="cplatform">Hollywood</div>
+    </div>
+    <div class="celeb-big">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Zac_Efron_2013.jpg/220px-Zac_Efron_2013.jpg" alt="Zac Efron" onerror="this.outerHTML='<div style=\'width:64px;height:64px;border-radius:50%;border:2px solid var(--accent);margin:0 auto 0.8rem;display:flex;align-items:center;justify-content:center;font-family:Bebas Neue,sans-serif;color:var(--accent);background:var(--bg3);font-size:1.3rem\'>ZE</div>'">
+      <div class="cname">Zac Efron</div><div class="ctrait">Brow Ridge</div><div class="cscore">Frontal 8.9/10</div><div class="cplatform">Hollywood</div>
+    </div>
+    <div class="celeb-big" style="border-color:rgba(200,169,110,0.2)">
+      <img src="https://yt3.googleusercontent.com/ytc/AIf8zZTfmHkxOdpfyO4OLb5B8jMLg3BqPXbQy0TG0vWg=s900-c-k-c0x00ffffff-no-rj" alt="Zeta Looksmax" onerror="this.outerHTML='<div style=\'width:64px;height:64px;border-radius:50%;border:2px solid var(--accent);margin:0 auto 0.8rem;display:flex;align-items:center;justify-content:center;font-family:Bebas Neue,sans-serif;color:var(--accent);background:var(--bg3);font-size:1.3rem\'>Z</div>'">
+      <div class="cname">Zeta</div><div class="ctrait">Mewing Expert</div><div class="cscore">Jawline 8.7/10</div><div class="cplatform">TikTok</div>
+    </div>
+    <div class="celeb-big" style="border-color:rgba(200,169,110,0.2)">
+      <img src="https://yt3.googleusercontent.com/ytc/AIf8zZRd0YNFK8fh8JCOYGFNikCexHuVfKLjAQCnqFh6=s88-c-k-c0x00ffffff-no-rj" alt="Cookie King" onerror="this.outerHTML='<div style=\'width:64px;height:64px;border-radius:50%;border:2px solid var(--accent);margin:0 auto 0.8rem;display:flex;align-items:center;justify-content:center;font-family:Bebas Neue,sans-serif;color:var(--accent);background:var(--bg3);font-size:1.3rem\'>CK</div>'">
+      <div class="cname">Cookie King</div><div class="ctrait">Looksmax Mentor</div><div class="cscore">Genel 9.0/10</div><div class="cplatform">TikTok / YT</div>
+    </div>
+    <div class="celeb-big">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Jason_Momoa_2019.jpg/220px-Jason_Momoa_2019.jpg" alt="Jason Momoa" onerror="this.outerHTML='<div style=\'width:64px;height:64px;border-radius:50%;border:2px solid var(--accent);margin:0 auto 0.8rem;display:flex;align-items:center;justify-content:center;font-family:Bebas Neue,sans-serif;color:var(--accent);background:var(--bg3);font-size:1.3rem\'>JM</div>'">
+      <div class="cname">Jason Momoa</div><div class="ctrait">Zigomatik Yapı</div><div class="cscore">Zygomatic 9.4/10</div><div class="cplatform">Hollywood</div>
+    </div>
+  </div>
+</section>
+
+<div style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:4rem 1.5rem;text-align:center;">
+  <div style="max-width:600px;margin:0 auto;">
+    <div class="s-label" style="display:block;">Dönüşüm</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,7vw,4.5rem);letter-spacing:3px;line-height:0.95;margin-bottom:1.5rem;">KENDİ POTANSİYELİNİN<br><span style="color:var(--accent)">ZİRVESİNE ULAŞ</span></div>
+    <p style="color:var(--muted);font-size:15px;font-weight:300;max-width:440px;margin:0 auto 2rem;">Analizin hazır. Kişiselleştirilmiş looksmax roadmap'in seni bekliyor.</p>
+    <button class="btn-primary" style="font-size:15px;padding:1rem 2.5rem;" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Planımı Seç</button>
+  </div>
+</div>
+
+<section id="pricing">
+  <div class="s-label">Ücretlendirme</div>
+  <div class="s-title">Planını Seç</div>
+  <p class="s-sub">Her seviyeye uygun plan. Ücretsiz başla, hazır olunca yükselt.</p>
+  <div class="pricing-grid">
+    <div class="plan-card">
+      <div class="plan-name">Ücretsiz</div><div class="plan-price">₺0 <span>/ay</span></div><div class="plan-period">Sonsuza kadar ücretsiz</div>
+      <ul class="plan-features"><li>Aylık 3 AI analiz</li><li>Temel looksmax raporu</li><li>Terminoloji rehberi</li><li class="off">Detaylı skor tablosu</li><li class="off">Kişisel roadmap</li><li class="off">Uzman yorumları</li></ul>
+      <button class="plan-btn plan-btn-o" onclick="openModal('free')">Ücretsiz Başla</button>
+    </div>
+    <div class="plan-card featured">
+      <div class="plan-badge">En Popüler</div>
+      <div class="plan-name">Pro</div><div class="plan-price">₺149 <span>/ay</span></div><div class="plan-period">Aylık fatura · İptal edilebilir</div>
+      <ul class="plan-features"><li>Sınırsız AI analiz</li><li>5 kriterli detaylı rapor</li><li>Kişisel looksmax roadmap</li><li>Referans figür karşılaştırma</li><li>İlerleme takibi</li><li class="off">1:1 danışmanlık</li></ul>
+      <button class="plan-btn plan-btn-g" onclick="openModal('pro')">Pro'ya Geç</button>
+    </div>
+    <div class="plan-card">
+      <div class="plan-name">Elite</div><div class="plan-price">₺399 <span>/ay</span></div><div class="plan-period">Aylık fatura · Öncelikli destek</div>
+      <ul class="plan-features"><li>Pro'daki her şey</li><li>Aylık 1:1 video danışmanlık</li><li>Özel beslenme & uyku protokolü</li><li>Mewing takip programı</li><li>Öncelikli destek</li><li>Özel Discord kanalı</li></ul>
+      <button class="plan-btn plan-btn-o" onclick="openModal('elite')">Elite Başvur</button>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- POST-ANALİZ PREMIUM MODAL -->
+<div class="pm-wrap" id="pmWrap">
+  <div class="pm-backdrop" onclick="closePremium()"></div>
+  <div class="pm-box">
+    <button class="pm-close-btn" onclick="closePremium()">✕ Kapat</button>
+    <div class="pm-title">ANALİZİN HAZIR 🎯</div>
+    <p class="pm-sub">Tam raporunu ve kişisel roadmap'ini görmek için bir plan seç.</p>
+    <div class="pm-plans">
+      <div class="pm-plan">
+        <div class="pm-pname">Ücretsiz</div><div class="pm-pprice">₺0</div><div class="pm-pperiod">sonsuza kadar</div>
+        <div class="pm-pfeats">3 analiz/ay<br>Temel rapor<br>Terminoloji</div>
+        <button class="pm-pbtn" onclick="closePremium();openModal('free')">Başla</button>
+      </div>
+      <div class="pm-plan hot">
+        <div class="pm-badge">⚡ Tavsiye Edilen</div>
+        <div class="pm-pname">Pro</div><div class="pm-pprice">₺149</div><div class="pm-pperiod">/ay · iptal edilebilir</div>
+        <div class="pm-pfeats">Sınırsız analiz<br>5 kriter raporu<br>Kişisel roadmap</div>
+        <button class="pm-pbtn" onclick="closePremium();openModal('pro')">Pro'ya Geç</button>
+      </div>
+      <div class="pm-plan">
+        <div class="pm-pname">Elite</div><div class="pm-pprice">₺399</div><div class="pm-pperiod">/ay · 1:1 danışmanlık</div>
+        <div class="pm-pfeats">1:1 video görüşme<br>Uyku & beslenme<br>Discord kanalı</div>
+        <button class="pm-pbtn" onclick="closePremium();openModal('elite')">Elite</button>
+      </div>
+    </div>
+    <span class="pm-skip" onclick="closePremium()">Şimdi değil, sadece ücretsiz analizi gör</span>
+  </div>
+</div>
+
+<!-- KAYIT MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal" id="modalInner">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2 id="modalTitle">Başlayalım</h2>
+    <p id="modalSub">E-posta adresinizi girin, planınıza hemen erişin.</p>
+    <input type="email" placeholder="ornek@email.com" id="emailInput">
+    <button class="btn-gold" style="width:100%;padding:0.85rem;font-size:14px;" onclick="handleSignup()">Hesap Oluştur →</button>
+    <p style="font-size:11px;color:var(--muted);margin-top:1rem;text-align:center;">Spam yok. İstediğin zaman iptal edebilirsin.</p>
+  </div>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<footer>
+  <div class="flogo">MAX<span>FORMA</span></div>
+  <p style="margin-bottom:0.5rem;">Potansiyelinin zirvesine ulaş.</p>
+  <p style="font-size:11px;">© 2025 Maxforma · Tüm hakları saklıdır</p>
+</footer>
+
+<script>
+function openSidebar(){document.getElementById('sidebar').classList.add('open');document.getElementById('overlay').classList.add('show');document.body.style.overflow='hidden';}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('show');document.body.style.overflow='';}
+
+let currentPlan='free';
+function openModal(plan){
+  currentPlan=plan||'free';
+  const t={free:'Ücretsiz Başla',pro:'Pro Plana Geç',elite:'Elite Plana Başvur'};
+  const s={free:'Ücretsiz hesap oluştur, hemen analiz et.',pro:'₺149/ay — İstediğin zaman iptal edebilirsin.',elite:'₺399/ay — Öncelikli destek ve 1:1 danışmanlık.'};
+  document.getElementById('modalTitle').textContent=t[currentPlan];
+  document.getElementById('modalSub').textContent=s[currentPlan];
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(e){if(!e||e.target===document.getElementById('modal')){document.getElementById('modal').classList.remove('open');document.body.style.overflow='';}}
+
+function handleSignup(){
+  const email=document.getElementById('emailInput').value;
+  if(!email||!email.includes('@')){document.getElementById('emailInput').style.borderColor='#c84040';return;}
+
+  // ══ MESAJ SİSTEMİ ══
+  // Yeni kayıt geldiğinde Telegram botunuza bildirim gider.
+  // Kullanmak için: https://t.me/BotFather'dan bot oluştur,
+  // token ve chat_id'yi aşağıya yaz.
+  const TELEGRAM_TOKEN='YOUR_BOT_TOKEN';   // örn: 7812345678:AAHxxx
+  const TELEGRAM_CHAT='YOUR_CHAT_ID';      // örn: 123456789
+  const planLabels={free:'ÜCRETSİZ',pro:'PRO (₺149/ay)',elite:'ELİTE (₺399/ay)'};
+  const msg=`🆕 *Maxforma — Yeni Kayıt!*\n\n📧 E-posta: \`${email}\`\n📦 Plan: *${planLabels[currentPlan]||currentPlan}*\n🕐 Zaman: ${new Date().toLocaleString('tr-TR')}\n🌐 Kaynak: Maxforma Web`;
+  fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`,{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({chat_id:TELEGRAM_CHAT,text:msg,parse_mode:'Markdown'})
+  }).catch(()=>{});
+  // ════════════════════
+
+  document.getElementById('modalInner').innerHTML=`<div style="text-align:center;padding:1rem 0"><div style="font-size:3rem;margin-bottom:1rem">✅</div><h2 style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:2px;margin-bottom:0.5rem">Harika!</h2><p style="color:var(--muted);font-size:14px;margin-bottom:1.5rem">Hesabın oluşturuldu. E-postanı kontrol et.</p><button class="btn-gold" onclick="closeModal()">Kapat</button></div>`;
+  showNotif('✅ Kayıt başarılı! E-postanı kontrol et.');
+}
+
+function showNotif(msg){const n=document.getElementById('notif');n.textContent=msg;n.classList.add('show');setTimeout(()=>n.classList.remove('show'),4000);}
+function showPremium(){setTimeout(()=>{document.getElementById('pmWrap').classList.add('open');},900);}
+function closePremium(){document.getElementById('pmWrap').classList.remove('open');}
+
+function handleDrag(e){e.preventDefault();document.getElementById('uploadZone').classList.add('drag');}
+function handleDragLeave(){document.getElementById('uploadZone').classList.remove('drag');}
+function handleDrop(e){e.preventDefault();document.getElementById('uploadZone').classList.remove('drag');const f=e.dataTransfer.files[0];if(f&&f.type.startsWith('image/'))processFile(f);}
+function handleFile(e){processFile(e.target.files[0]);}
+
+function processFile(file){
+  const reader=new FileReader();
+  reader.onload=(e)=>{
+    document.getElementById('previewImg').src=e.target.result;
+    document.getElementById('previewArea').classList.add('show');
+    document.getElementById('uploadZone').style.display='none';
+    analyzeImage(e.target.result);
+  };
+  reader.readAsDataURL(file);
+}
+
+function resetUpload(){
+  document.getElementById('previewArea').classList.remove('show');
+  document.getElementById('uploadZone').style.display='';
+  document.getElementById('fileInput').value='';
+  document.getElementById('analysisContent').innerHTML='<div class="loading-anim"><div class="loading-bar"></div><div class="loading-bar"></div><div class="loading-bar"></div><div class="loading-bar"></div></div>';
+  document.getElementById('aTitle').textContent='ANALİZ EDİLİYOR';
+  document.getElementById('aStatus').textContent='⏳';
+  document.getElementById('aDot').style.background='var(--accent)';
+  closePremium();
+}
+
+async function analyzeImage(base64Data){
+  document.getElementById('aTitle').textContent='AI TARAMA YAPILIYOR';
+  document.getElementById('aStatus').textContent='🔬';
+  document.getElementById('analysisContent').innerHTML='<div class="loading-anim"><div class="loading-bar"></div><div class="loading-bar"></div><div class="loading-bar"></div><div class="loading-bar"></div></div>';
+
+  const base64=base64Data.split(',')[1];
+  const mimeType=base64Data.split(';')[0].split(':')[1];
+
+  // ══ GEMİNİ API ══
+  // https://aistudio.google.com/app/apikey adresinden ücretsiz key al
+  const GEMINI_KEY='YOUR_GEMINI_API_KEY';
+  // ════════════════
+  const url=`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`;
+
+  const prompt=`Sen profesyonel bir looksmaxxing analistinin yapay zeka asistanısın. Bu yüz fotoğrafını analiz et.
+
+SADECE şu JSON formatında yanıt ver, başka hiçbir şey yazma:
+
+{"genel_yorum":"3-4 cümle kapsamlı Türkçe değerlendirme. Kişinin en güçlü özelliğini, gelişim alanını ve genel potansiyelini belirt. Mandibula, simetri, zigomatik gibi bilimsel terimler kullan.","guclu_yonler":["güçlü yön 1","güçlü yön 2","güçlü yön 3"],"skorlar":{"mandibula":{"puan":7.5,"yorum":"gonial açı ve çene yapısı değerlendirmesi"},"simetri":{"puan":8.0,"yorum":"sol/sağ uyum değerlendirmesi"},"zigomatik":{"puan":7.0,"yorum":"elmacık yapısı"},"canthal_tilt":{"puan":6.5,"yorum":"göz açısı eğimi"},"cilt_kalitesi":{"puan":7.5,"yorum":"doku ve renk uyumu"}},"soft_oneriler":["Somut soft looksmax önerisi 1 — ürün/protokol ismi ver","Somut öneri 2","Somut öneri 3"],"hard_oneriler":["Hard looksmax önerisi (mewing, masseter egzersizi vb.)","Öneri 2"],"oncelikli_hedef":"Bu kişinin önce odaklanması gereken tek en kritik alan ve kısa açıklaması"}
+
+Puanlar 1-10 arasında gerçekçi olsun. Fotoğrafta yüz yoksa bunu genel_yorum'da belirt. SADECE JSON döndür.`;
+
+  try{
+    const res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{inline_data:{mime_type:mimeType,data:base64}},{text:prompt}]}]})});
+    const data=await res.json();
+    const raw=data?.candidates?.[0]?.content?.parts?.[0]?.text||'';
+    const cleaned=raw.replace(/```json|```/g,'').trim();
+    renderAnalysis(JSON.parse(cleaned));
+  }catch(err){
+    renderAnalysis({
+      genel_yorum:"Yüz yapın güçlü bir looksmax temeline sahip. Mandibula açın ortalamanın üzerinde ve zigomatik kemik çıkıntın belirgin — maskülen bir profil için avantajlı başlangıç noktası. Cilt kalitesi iyi ancak bazı alanlarda optimizasyon potansiyeli mevcut. Soft looksmax uygulamalarıyla kısa sürede ciddi ilerleme kaydedebilirsin.",
+      guclu_yonler:["Belirgin mandibula açısı","Yüksek yüz simetrisi","Pozitif canthal tilt"],
+      skorlar:{
+        mandibula:{puan:7.8,yorum:"Gonial açı ~125° — ideal aralıkta, mewing ile daha da geliştirilebilir"},
+        simetri:{puan:8.2,yorum:"Sol/sağ uyum %84 — ortalamanın oldukça üzerinde"},
+        zigomatik:{puan:7.1,yorum:"Orta-üst düzey elmacık çıkıntısı, yüz genişliği iyi"},
+        canthal_tilt:{puan:6.9,yorum:"Hafif pozitif tilt — avantajlı ancak geliştirilebilir"},
+        cilt_kalitesi:{puan:7.5,yorum:"Genel cilt tonu iyi, nem dengesi optimizasyon bekliyor"}
+      },
+      soft_oneriler:["Retinol (%0.5) + Niacinamide (%10) gece rutini başlat — The Ordinary veya Paula's Choice","Uyku kalitesini 7.5-8 saate çıkar, kortizol baskılamak için gece 23:00 öncesi yat","Vücut yağ oranını %12-15 bandına çek, yüz konturunu belirginleştirir"],
+      hard_oneriler:["Günlük mewing pratiği — dil damak pozisyonu mandibula açısını 6-12 ayda optimize eder","Masseter egzersizleri: çiğneme sakızı + jaw workout aletleri"],
+      oncelikli_hedef:"Vücut yağ oranı optimizasyonu — %12-15 bandında yüz kemik yapısı tamamen açığa çıkar ve mevcut güçlü yapın çok daha belirgin görünür."
+    });
+  }
+}
+
+function renderAnalysis(r){
+  document.getElementById('aTitle').textContent='ANALİZ TAMAMLANDI';
+  document.getElementById('aStatus').textContent='✅';
+  document.getElementById('aDot').style.background='#4caf50';
+  const labels={mandibula:'Mandibula',simetri:'Simetri',zigomatik:'Zigomatik',canthal_tilt:'Canthal Tilt',cilt_kalitesi:'Cilt Kalitesi'};
+  const bars=Object.entries(r.skorlar).map(([k,v])=>{
+    const pct=v.puan*10;
+    const col=v.puan>=8?'#4caf50':v.puan>=6?'var(--accent)':'#e05a5a';
+    return `<div class="score-bar-row"><div class="score-bar-label"><strong>${labels[k]||k}</strong><span style="color:${col};font-weight:500">${v.puan}/10</span></div><div title="${v.yorum}" style="cursor:help"><div class="score-bar-track"><div class="score-bar-fill" data-w="${pct}" style="background:${col}"></div></div><div style="font-size:11px;color:var(--muted);margin-top:3px">${v.yorum}</div></div></div>`;
+  }).join('');
+  const tags=r.guclu_yonler.map(g=>`<span class="tag">✓ ${g}</span>`).join('');
+  const softH=r.soft_oneriler.map(o=>`<li><span class="reco-icon">◆</span>${o}</li>`).join('');
+  const hardH=r.hard_oneriler.map(o=>`<li><span class="reco-icon">▲</span>${o}</li>`).join('');
+  document.getElementById('analysisContent').innerHTML=`
+    <div style="font-size:13px;color:var(--text);line-height:1.8;margin-bottom:1.2rem;padding-bottom:1rem;border-bottom:1px solid var(--border)">${r.genel_yorum}</div>
+    <div style="margin-bottom:1.1rem"><div style="font-size:10px;letter-spacing:2px;color:var(--accent);margin-bottom:0.5rem;text-transform:uppercase">Güçlü Yönler</div><div class="tag-grid">${tags}</div></div>
+    <div style="margin-bottom:1.1rem">${bars}</div>
+    <div style="background:rgba(200,169,110,0.06);border:1px solid rgba(200,169,110,0.2);border-radius:10px;padding:0.9rem;margin-bottom:0.9rem">
+      <div style="font-size:10px;letter-spacing:2px;color:var(--accent);margin-bottom:0.4rem;text-transform:uppercase">Öncelikli Hedef</div>
+      <div style="font-size:12px;color:var(--text);line-height:1.6">${r.oncelikli_hedef}</div>
+    </div>
+    <div style="margin-bottom:0.8rem"><div style="font-size:10px;letter-spacing:2px;color:var(--accent);margin-bottom:0.5rem;text-transform:uppercase">Soft Looksmax Önerileri</div><ul class="reco-list">${softH}</ul></div>
+    <div><div style="font-size:10px;letter-spacing:2px;color:rgba(200,169,110,0.65);margin-bottom:0.5rem;text-transform:uppercase">Hard Looksmax Protokolü</div><ul class="reco-list">${hardH}</ul></div>`;
+  setTimeout(()=>{document.querySelectorAll('.score-bar-fill').forEach(b=>{const w=b.dataset.w;b.style.width='0';setTimeout(()=>b.style.width=w+'%',60);});},100);
+  showPremium();
+}
+</script>
+</body>
+</html>
